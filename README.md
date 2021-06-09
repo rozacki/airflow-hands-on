@@ -44,7 +44,8 @@ https://airflow.apache.org/docs/apache-airflow/2.1.0/start/local.html
    
    
 
-Appendix:
+###Appendix:
+
 If wget is missing, brew may take opportunity to update some packages
 $ brew install wget
 
