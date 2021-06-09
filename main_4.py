@@ -5,7 +5,7 @@ import datetime
 from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
-
+from airflow.models import Variable
 '''
 deploy to dags folder
 show code
@@ -16,9 +16,8 @@ show logs - they are not empty
 
 '''
 
-def download_site_report(site_id=100, start_date=datetime.datetime.fromisoformat('2021-04-01')):
+def download_site_report(site_id, start_date):
     logging.info('start python operator')
-    import json
 
     enddate = start_date + datetime.timedelta(days=1)
 
@@ -38,8 +37,12 @@ def download_site_report(site_id=100, start_date=datetime.datetime.fromisoformat
 
 
 args = {'owner': 'chris'}
-with DAG(dag_id=f'python_road_data', description='download report from one site', start_date=days_ago(1),
+with DAG(dag_id=f'python_road_data2', description='download report from one site', start_date=days_ago(1),
          default_args=args) as dag:
+
+    site_id = Variable.get('site id')
+    date = Variable.get('date')
+
     python_operator = PythonOperator(task_id='download_site_report', python_callable=download_site_report
-                                     , op_kwargs={'site_id': 1000,
-                                               'start_date': datetime.datetime.fromisoformat('2021-04-01')})
+                                     , op_kwargs={'site_id': site_id,
+                                                  'start_date': datetime.datetime.fromisoformat(date)})
