@@ -41,7 +41,7 @@ def join_parallel_proc():
 
 args = {'owner': 'zuhlke'}
 with DAG(dag_id=f'zuhlke_branching_dag', description='this is dag with single python operator', start_date=days_ago(1),
-         default_args=args) as dag:
+         default_args=args, tags=['zuhlke', 'hands-on']) as dag:
     start_here = PythonOperator(task_id='start_here', python_callable=start_proc)
 
     parallel_one = PythonOperator(task_id='parallel_one', python_callable=parallel_one_proc)

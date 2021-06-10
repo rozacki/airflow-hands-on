@@ -39,18 +39,55 @@ Type Y when asked whether you want to proceed with creating the environment.
 version - ```python --version```. It should match 3.8.x.
    
 
-5) Install Airflow via pip into the conda environment, using the instructions/commands found here -
-https://airflow.apache.org/docs/apache-airflow/2.1.0/start/local.html
-   
+5) Install Airflow and requests package via pip into the conda environment
+
+$ pip install "apache-airflow
+$ pip install requests
+
+Then run below
+```
+# initialize the database
+airflow db init
+
+airflow users create \
+    --username admin \
+    --firstname Peter \
+    --lastname Parker \
+    --role Admin \
+    --email spiderman@superhero.org
+
+# start the web server, default port is 8080
+airflow webserver --port 8080 -D
+
+# start the scheduler
+# open a new terminal or else run webserver with ``-D`` option to run it as a daemon
+airflow scheduler -D
+
+# visit localhost:8080 in the browser and use the admin account you just
+# created to login. Enable the example_bash_operator dag in the home page
+```
+
+After that step there should be ~/your-user-name/airflow/dags
+
+Go to that folder and
+
+$git clone https://github.com/rozacki/airflow-hands-on
+
+This is where we will develop our data pipelines.
+
+Open this location with your favourite IDE.   
    
 
 ### Appendix:
 
 If wget is missing, brew may take opportunity to update some packages
+
 $ brew install wget
 
 If conda is not on your path
+
 $ export PATH="$HOME/miniconda/bin:$PATH"
 
 Initialize conda with shell of your choice (shell restart will be required)
+
 $ conda init bash

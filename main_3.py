@@ -39,7 +39,7 @@ def download_site_report(site_id=100, start_date=datetime.datetime.fromisoformat
 
 args = {'owner': 'zuhlke'}
 with DAG(dag_id=f'zuhlke_python_road_data', description='download report from one site', start_date=days_ago(1),
-         default_args=args) as dag:
+         default_args=args, tags=['zuhlke', 'hands-on']) as dag:
     python_operator = PythonOperator(task_id='download_site_report', python_callable=download_site_report
                                      , op_kwargs={'site_id': 1000,
                                                'start_date': datetime.datetime.fromisoformat('2021-04-01')})

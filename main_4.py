@@ -38,7 +38,7 @@ def download_site_report(site_id, start_date):
 
 args = {'owner': 'zuhlke'}
 with DAG(dag_id=f'zuhlke_python_road_data2', description='download report from one site', start_date=days_ago(1),
-         default_args=args) as dag:
+         default_args=args, tags=['zuhlke', 'hands-on']) as dag:
 
     site_id = Variable.get('site id')
     date = Variable.get('date')

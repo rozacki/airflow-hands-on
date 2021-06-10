@@ -11,7 +11,6 @@ show graph view
 enable dag
 schedule it
 show logs - they are not empty
-
 '''
 
 def python_callable():
@@ -20,5 +19,5 @@ def python_callable():
 
 args = {'owner': 'zuhlke'}
 with DAG(dag_id=f'zuhlke_python_dag', description='this is dag with single python operator', start_date=days_ago(1),
-         default_args=args) as dag:
+         default_args=args, tags=['zuhlke', 'hands-on']) as dag:
     python_operator = PythonOperator(task_id='python_operator', python_callable=python_callable)
