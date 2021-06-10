@@ -71,7 +71,7 @@ After that step there should be ~/your-user-name/airflow/dags
 
 Go to that folder and
 
-$git clone https://github.com/rozacki/airflow-hands-on
+$git clone git@github.com:rozacki/airflow-hands-on.git
 
 This is where we will develop our data pipelines.
 
