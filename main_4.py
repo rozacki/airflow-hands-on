@@ -13,11 +13,21 @@ import json
 import numpy as np
 
 
+def store_data(text):
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    data_file = os.path.join(cwd, f'data_file.json')
+    logging.info(f'data stored in {data_file}')
+
+    with open(data_file, 'w') as f:
+        f.write(text)
+
+
 def get_site_daily_traffic_stats(json_data):
     df = pd.DataFrame(json_data['Rows'])
-    df['Total Traffic Volume'] = df['Total Volume'].astype(int)
-    df['Avg mph'] = df['Avg mph'].astype(int)
-    df['Total mph'] = df['Avg mph'] * df['Total Traffic Volume']
+    df['Total Traffic Volume'] = pd.to_numeric(df['Total Volume'], errors='coerce')
+    df['Avg mph'] = pd.to_numeric(df['Avg mph'], errors='coerce')
+    df['Total mph'] = pd.to_numeric(df['Avg mph'], errors='coerce') * pd.to_numeric(df['Total Traffic Volume']
+                                                                                    , errors='coerce')
     grouped_df = pd.DataFrame(df.groupby(['Site Name', 'Report Date']).agg(
         {
             'Total Traffic Volume': 'sum',
@@ -47,6 +57,8 @@ def download_site_report_proc(site_id, start_date):
         logging.debug(f'highway england data {res.json()}')
     else:
         logging.debug(f'highway england data error code {res.status_code}')
+
+    store_data(res.text)
 
 
 def process_site_report_proc():
