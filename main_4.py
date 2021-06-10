@@ -36,8 +36,8 @@ def download_site_report(site_id, start_date):
         logging.debug(f'HE data error code {res.status_code}')
 
 
-args = {'owner': 'chris'}
-with DAG(dag_id=f'python_road_data2', description='download report from one site', start_date=days_ago(1),
+args = {'owner': 'zuhlke'}
+with DAG(dag_id=f'zuhlke_python_road_data2', description='download report from one site', start_date=days_ago(1),
          default_args=args) as dag:
 
     site_id = Variable.get('site id')

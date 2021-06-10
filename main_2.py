@@ -18,7 +18,7 @@ def python_callable():
     logging.info('logging from python operator')
 
 
-args = {'owner': 'chris'}
-with DAG(dag_id=f'python_dag', description='this is dag with single python operator', start_date=days_ago(1),
+args = {'owner': 'zuhlke'}
+with DAG(dag_id=f'zuhlke_python_dag', description='this is dag with single python operator', start_date=days_ago(1),
          default_args=args) as dag:
     python_operator = PythonOperator(task_id='python_operator', python_callable=python_callable)
