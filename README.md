@@ -43,6 +43,7 @@ version - ```python --version```. It should match 3.8.x.
 
 $ pip install "apache-airflow
 $ pip install requests
+$ pip install pandas
 
 Then run below
 ```
