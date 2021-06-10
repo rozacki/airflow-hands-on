@@ -6,15 +6,6 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
 from airflow.models import Variable
-'''
-deploy to dags folder
-show code
-show graph view
-enable dag
-schedule it
-show logs - they are not empty
-
-'''
 
 def download_site_report(site_id, start_date):
     logging.info('start python operator')

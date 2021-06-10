@@ -5,17 +5,6 @@ import random
 from airflow import DAG
 from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
-from airflow.utils import trigger_rule
-
-'''
-deploy to dags folder
-show code
-show graph view
-enable dag
-schedule it
-show logs - they are not empty
-
-'''
 
 
 def start_proc(log_this='Let''s start branching'):
