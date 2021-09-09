@@ -92,3 +92,74 @@ $ export PATH="$HOME/miniconda/bin:$PATH"
 Initialize conda with shell of your choice (shell restart will be required)
 
 $ conda init bash
+
+
+### Parallel execution
+Question: how may the same dags can be run in the same time.
+
+1. Change executor to LocalExecutor. It does not require setup for queue (redis/rabbitmq)
+2. Install and provision Postgress database by calling 
+
+airflow db init
+
+And changing sql_alchemy_conn
+
+sql_alchemy_conn = postgresql+psycopg2://airflow_user:airflow_pass@localhost/airflow_db
+
+Check http://airflow.apache.org/docs/apache-airflow/stable/faq.html#how-to-improve-dag-performance
+But default setting allow you to run 16 the same dags concurrently
+
+```` 
+# This defines the maximum number of task instances that can run concurrently in Airflow
+# regardless of scheduler count and worker count. Generally, this value is reflective of
+# the number of task instances with the running state in the metadata database.
+parallelism = 0
+````
+
+````
+# The maximum number of task instances allowed to run concurrently in each DAG. To calculate
+# the number of tasks that is running concurrently for a DAG, add up the number of running
+# tasks for all DAG runs of the DAG. This is configurable at the DAG level with ``concurrency``,
+# which is defaulted as ``dag_concurrency``.
+dag_concurrency = 32
+````
+````
+# The maximum number of active DAG runs per DAG. The scheduler will not create more DAG runs
+# if it reaches the limit. This is configurable at the DAG level with ``max_active_runs``,
+# which is defaulted as ``max_active_runs_per_dag``.
+max_active_runs_per_dag = 16
+````
+
+Default values were used for DAG and task specific settings
+
+I used CLI to trigger dags
+
+````
+airflow dags trigger event_driven
+````
+
+I set up start_date to the past 2021-09-24. When airflow finished processing passed dates I had a nice set
+of DAG runs to retry and run un parallel including 08-24
+I used:
+
+````
+airflow tasks clear -s 2021-08-24 event_driven
+````
+
+To retry failed I used:
+````
+airflow tasks clear --only-failed -s 2021-08-24 event_driven
+````
+
+### Passing parameters
+Questions:
+
+how to pass arguments during manual trigger i.e. CLI, UI, API
+
+can we pass parameters using xcom
+
+can we still retry
+
+````
+airflow dags trigger -c '{"";""}' event_driven
+````
