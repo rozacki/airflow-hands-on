@@ -95,7 +95,7 @@ $ conda init bash
 
 
 ### Parallel execution
-Question: how may the same dags can be run in the same time.
+Question: how to control parallelisation?
 
 1. Change executor to LocalExecutor. It does not require setup for queue (redis/rabbitmq)
 2. Install and provision Postgress database by calling 
@@ -146,7 +146,7 @@ I used:
 airflow tasks clear -s 2021-08-24 event_driven
 ````
 
-To retry failed I used:
+To retry failed dag runs I used:
 ````
 airflow tasks clear --only-failed -s 2021-08-24 event_driven
 ````
@@ -154,12 +154,16 @@ airflow tasks clear --only-failed -s 2021-08-24 event_driven
 ### Passing parameters
 Questions:
 
-how to pass arguments during manual trigger i.e. CLI, UI, API
+how to pass arguments during manual trigger i.e. CLI, UI, API?
 
-can we pass parameters using xcom
-
-can we still retry
+can we pass parameters using xcom?
+yes
+can we still retry and oryginal arguments both from command line and passed via
+xcom will be preserved?
+Yes
 
 ````
-airflow dags trigger -c '{"";""}' event_driven
+airflow dags trigger -c '{"snaphot_id";"1"}' event_driven
 ````
+Load test using API is available here load_test.py.
+I 
