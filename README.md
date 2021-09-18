@@ -156,14 +156,20 @@ Questions:
 
 how to pass arguments during manual trigger i.e. CLI, UI, API?
 
-can we pass parameters using xcom?
-yes
-can we still retry and oryginal arguments both from command line and passed via
-xcom will be preserved?
-Yes
+- CLI: using -c argument
+- API: POST json object "conf"
+
+will argument be passwed using  xcom?
+
+- yes
+
+when we retry will the original xcom arguments both from command line and passed via
+
+will be preserved?
+
+- Yes, when clearing the state of a step, xcom arguments are used to invoke the step
 
 ````
-airflow dags trigger -c '{"snaphot_id";"1"}' event_driven
+airflow dags trigger -c '{"snaphot_id";"1"}' event_driven_params
 ````
-Load test using API is available here load_test.py.
-I 
+Load test using API is available in load_test.py.

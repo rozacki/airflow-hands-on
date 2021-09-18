@@ -1,5 +1,4 @@
 import requests
-from pprint import pprint
 import json
 import base64
 
@@ -9,13 +8,14 @@ body = {
     "conf":
         {"snapshot_id": ""}
 }
-for i in range(0, 500):
+
+number_of_steps = 500
+encoded_pass = base64.b64encode(b'admin:admin').decode()
+headers = {f'Authorization': f'Basic {encoded_pass}', 'Content-type': 'application/json'}
+
+for i in range(0, number_of_steps):
     body['conf']['snapshot_id'] = str(i)
-
     print(json.dumps(body))
-    encoded_pass = base64.b64encode(b'admin:admin').decode()
-
-    r = requests.post(url, data=json.dumps(body), headers={f'Authorization': f'Basic {encoded_pass}',
-                                               'Content-type': 'application/json'})
+    r = requests.post(url, data=json.dumps(body), headers=headers)
     print(r.content)
     print(r.status_code)
