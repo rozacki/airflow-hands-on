@@ -1,6 +1,6 @@
 
 
-## Installation Instructions
+## Installation Instructions (using conda)
 
 
 1) Install an IDE - we will use PyCharm Community Edition - https://www.jetbrains.com/pycharm/
@@ -94,22 +94,25 @@ Initialize conda with shell of your choice (shell restart will be required)
 $ conda init bash
 
 
-### Parallel execution
+
+## Parallel execution
 Question: how to control parallelisation?
 
 1. Change executor to LocalExecutor. It does not require setup for queue (redis/rabbitmq)
 2. Install and provision Postgress database by calling 
-
+````
 airflow db init
+````
 
 And changing sql_alchemy_conn
-
+````
 sql_alchemy_conn = postgresql+psycopg2://airflow_user:airflow_pass@localhost/airflow_db
+````
 
 Check http://airflow.apache.org/docs/apache-airflow/stable/faq.html#how-to-improve-dag-performance
 But default setting allow you to run 16 the same dags concurrently
 
-```` 
+````
 # This defines the maximum number of task instances that can run concurrently in Airflow
 # regardless of scheduler count and worker count. Generally, this value is reflective of
 # the number of task instances with the running state in the metadata database.
@@ -159,7 +162,7 @@ how to pass arguments during manual trigger i.e. CLI, UI, API?
 - CLI: using -c argument
 - API: POST json object "conf"
 
-will argument be passwed using  xcom?
+will argument be passed using xcom after clearing the state?
 
 - yes
 
@@ -167,7 +170,7 @@ when we retry will the original xcom arguments both from command line and passed
 
 will be preserved?
 
-- Yes, when clearing the state of a step, xcom arguments are used to invoke the step
+- Yes, when clearing the state of a step, xcom arguments are preserved in database and used to invoke the step
 
 ````
 airflow dags trigger -c '{"snaphot_id";"1"}' event_driven_params
