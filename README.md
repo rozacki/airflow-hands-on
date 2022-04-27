@@ -95,7 +95,7 @@ $ conda init bash
 
 
 
-## Parallel execution
+## Next step - Parallel execution
 Question: how to control parallelisation?
 
 1. Change executor to LocalExecutor. It does not require setup for queue (redis/rabbitmq)
